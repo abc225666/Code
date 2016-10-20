@@ -64,13 +64,13 @@ void* find_circle(void* input_data)
 
 }
 
-int main()
+int main(int argc,char * argv[])
 {
     srand(time(NULL));
-   	printf("a=%d\n",time(NULL));
 	pthread_t* handles;
 	t_data* thread_data;
-	scanf("%lld",&total_point);
+	//scanf("%lld",&total_point);
+	total_point=strtoll(argv[1],NULL,10);
 	
 	handles = (pthread_t*)malloc (thread_num*sizeof(pthread_t));
 	thread_data=(t_data*)malloc(thread_num*sizeof(t_data));
@@ -91,7 +91,7 @@ int main()
 
 		total_in_point+=(lli)every;
 	}
-	//printf("%llu\n",total_in_point );
+	//printf("%llu\n",total_point );
 	printf("%lf\n",(double)total_in_point/(double)total_point*4);
 
 	return 0;
