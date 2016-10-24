@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <pthread.h>
+#include <time.h>
 
 using namespace std;
 
@@ -94,10 +95,13 @@ void* find_circle(void* input_data)
 
 int main(int argc,char* argv[])
 {
+	//int gg=time(NULL);
 	srand(time(NULL));
 	pthread_t* handle;
 	thread_data* handle_data;
 	total_point=strtoll(argv[1],NULL,10);
+	//thread_num=strtoll(argv[2],NULL,10);
+	//printf("%lld %d\n",total_point,thread_num);
 	handle=(pthread_t*)malloc(thread_num*sizeof(pthread_t));
 	handle_data=(thread_data*)malloc(thread_num*sizeof(thread_data));
 
@@ -119,6 +123,8 @@ int main(int argc,char* argv[])
 
 	}
 	printf("%lf\n",(double)total_in_point/(double)total_point*4);
+
+	//printf("%d\n",time(NULL)-gg);
 
 
 	return 0;
