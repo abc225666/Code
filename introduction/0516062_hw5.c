@@ -12,14 +12,14 @@ typedef long long int lli;
 
 int times=0;
 
-struct matrix
+typedef struct matrix
 {
 	lli a,b,c,d;
-};
+} matrix ;
 
-matrix mul(matrix m1,matrix m2)
+struct matrix mul(struct matrix m1,struct matrix m2)
 {
-	matrix temp;
+	struct matrix temp;
 
 
 
@@ -30,9 +30,9 @@ matrix mul(matrix m1,matrix m2)
 	return temp;
 }
 
-matrix pow(matrix m,int n)
+struct matrix poww(matrix m,int n)
 {
-	matrix output;
+	struct matrix output;
 
 	if(n==0)
 	{
@@ -50,12 +50,12 @@ matrix pow(matrix m,int n)
 
 		if(n%2==1)
 		{
-			output=mul(pow(m,1),pow(m,n-1));
+			output=mul(poww(m,1),poww(m,n-1));
 		}
 		else if(n %2==0)
 		{
 			
-			output=mul(pow(m,n/2),pow(m,n/2));
+			output=mul(poww(m,n/2),poww(m,n/2));
 		}
 	}
 
@@ -64,7 +64,7 @@ matrix pow(matrix m,int n)
 
 int main()
 {
-	matrix basic;
+	struct matrix basic;
 	basic.a=0;
 	basic.b=1;
 	basic.c=1;
@@ -81,7 +81,7 @@ int main()
 		else
 		{
 
-			result=pow(basic,n);
+			result=poww(basic,n);
 		}
 		//printf("%lld %lld\n%lld %lld\n",result.a,result.b,result.c,result.d);
 		printf("F(%d)=%lld\n",n,result.b);

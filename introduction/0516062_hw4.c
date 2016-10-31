@@ -19,7 +19,7 @@ int main()
 	int t,t1;
 	srand(time(NULL));
 
-	while(scanf(" %d %d",&n,&m)!=EOF)
+	while(printf("Enter the size of the maze:") &&scanf(" %d %d",&n,&m)!=EOF)
 	{
 		if(n<=0 || m<=0)
 			printf("i and j need to be > 0\n");
