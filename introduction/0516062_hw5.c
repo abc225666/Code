@@ -34,14 +34,13 @@ struct matrix poww(matrix m,int n)
 {
 	struct matrix output;
 
-	if(n==0)
-	{
-		output.a=1;
-		output.b=0;
-		output.c=0;
-		output.d=1;
-	}
-	else if(n==1)
+	
+	output.a=1;
+	output.b=0;
+	output.c=0;
+	output.d=1;
+
+	/*else if(n==1)
 	{
 		return m;
 	}
@@ -57,7 +56,32 @@ struct matrix poww(matrix m,int n)
 			
 			output=mul(poww(m,n/2),poww(m,n/2));
 		}
+	}*/
+	
+
+	//////////////////////////////
+	// ex. 7 = 111 (4 2 1) 
+	// n^1 * n^2 * n^4 = n^7
+	//
+	// ex. 10 = 1010
+	// n^2 * n^8 =n^10
+	// 
+	// if last bit is 1 means we need this component
+	// else ^2
+
+
+	while(n)
+	{
+		if(n & 1)
+		{
+			output=mul(output,m);
+
+		}
+		m=mul(m,m);
+		n>>=1;
 	}
+	
+
 
 	return output;
 }
