@@ -86,29 +86,36 @@ struct matrix poww(matrix m,int n)
 	return output;
 }
 
-int main()
+void F(int n)
 {
 	struct matrix basic;
 	basic.a=0;
 	basic.b=1;
 	basic.c=1;
 	basic.d=1;
-
 	matrix result;
+	if(n<0)
+	{
+		printf("input need to >= 0\n");
+	}
+	else
+	{
+
+		result=poww(basic,n);
+	}
+		//printf("%lld %lld\n%lld %lld\n",result.a,result.b,result.c,result.d);
+	printf("F(%d)=%lld\n",n,result.b);
+}
+
+int main()
+{
+	
+
+	
 	int n;
 	while(printf("Enter an integer>=0:") && scanf(" %d",&n)!=EOF )
 	{
-		if(n<0)
-		{
-			printf("input need to >= 0\n");
-		}
-		else
-		{
-
-			result=poww(basic,n);
-		}
-		//printf("%lld %lld\n%lld %lld\n",result.a,result.b,result.c,result.d);
-		printf("F(%d)=%lld\n",n,result.b);
+		F(n);
 	}
 
 	return 0;
