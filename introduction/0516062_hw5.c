@@ -86,7 +86,7 @@ struct matrix poww(matrix m,int n)
 	return output;
 }
 
-void F(int n)
+int F(int n)
 {
 	struct matrix basic;
 	basic.a=0;
@@ -104,7 +104,8 @@ void F(int n)
 		result=poww(basic,n);
 	}
 		//printf("%lld %lld\n%lld %lld\n",result.a,result.b,result.c,result.d);
-	printf("F(%d)=%lld\n",n,result.b);
+	return result.b;
+	//printf("F(%d)=%lld\n",n,result.b);
 }
 
 int main()
@@ -115,7 +116,8 @@ int main()
 	int n;
 	while(printf("Enter an integer>=0:") && scanf(" %d",&n)!=EOF )
 	{
-		F(n);
+		int result=F(n);
+		printf("F(%d)=%d\n",n,result);
 	}
 
 	return 0;
