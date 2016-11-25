@@ -14,14 +14,29 @@ typedef struct data_s
 } data;
 
 
-int isprime(int n) 
+
+int isprime(long long int n) 
 {
 	int i,squareroot;
 
 	squareroot = (int) sqrt(n);
 	for (i=3; i<=squareroot; i=i+2)
 	{
-		if ((n%i)==0)
+		if (n%i==0)
+			return 0;
+	}
+	return 1;
+
+}
+
+int int_isprime(int n)
+{
+	int i,squareroot;
+
+	squareroot = (int) sqrt(n);
+	for (i=3; i<=squareroot; i=i+2)
+	{
+		if (n%i==0)
 			return 0;
 	}
 	return 1;
@@ -71,20 +86,32 @@ int main(int argc, char* argv[])
 	if(limit==2)
 	{
 		d.max_prime=2;
-		d.count++;
+		
 		//foundone=2;
 		//pc++;
 	}
 
 	for (n=3+2*rank; n<=limit; n=n+2*size)
 	{
-		
-		if (isprime(n)) 
+		if(n<=2147483647)
 		{
-			d.count++;
-			d.max_prime= n ;
+			if (int_isprime(n)) 
+			{
+				d.count++;
+				d.max_prime= n ;
 			//pc++;
 			//foundone = n;
+			}
+		}
+		else
+		{
+			if (isprime(n)) 
+			{
+				d.count++;
+				d.max_prime= n ;
+			//pc++;
+			//foundone = n;
+			}
 		}			
 	}
 
@@ -115,6 +142,7 @@ int main(int argc, char* argv[])
 
 	if(rank==MASTER)
 	{
+		if(limit>=2) d.count++;
 		printf("Done. Largest prime is %lld Total primes %lld\n",d.max_prime,d.count);
 		
 	}
