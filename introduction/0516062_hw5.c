@@ -15,7 +15,7 @@ int times=0;
 typedef struct matrix
 {
 	lli a,b,c,d;
-} matrix ;
+} matrixc ;
 
 struct matrix mul(struct matrix m1,struct matrix m2)
 {
@@ -30,9 +30,9 @@ struct matrix mul(struct matrix m1,struct matrix m2)
 	return temp;
 }
 
-struct matrix poww(matrix m,int n)
+struct matrix poww(matrixc m,int n)
 {
-	struct matrix output;
+	matrixc output;
 
 	
 	output.a=1;
