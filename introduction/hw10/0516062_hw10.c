@@ -22,34 +22,29 @@ st_data data[200000];
 
 int cmp(const void* a,const void * b)
 {
-	int index=0;
-	while(index<100)
-	{
-		if( (((st_data*)a)->name[index]) != (((st_data*)b)->name[index]) )
-			return (((st_data*)a)->name[index]) - (((st_data*)b)->name[index]);
-		index++;
-	}
-	return 1;
+	// compare with name
+	st_data *in_a=(st_data*)a;
+	st_data *in_b=(st_data*)b;
 	
-
+	return strcmp(in_a->name,in_b->name);
 }
 
 int cmp_conc(const void* a,const void * b)
 {
-	
-	int index=0;
-	while(index<100)
+	// compare with name and concertration
+	st_data *in_a=(st_data*)a;
+	st_data *in_b=(st_data*)b;
+
+	if(!strcmp( in_a->name, in_b->name))
 	{
-		if( (((st_data*)a)->name[index]) != (((st_data*)b)->name[index]) )
-			return (((st_data*)a)->name[index]) - (((st_data*)b)->name[index]);
-		index++;
+		return  -(strtoll( in_a->conc , NULL,10) - strtoll( in_b->conc,NULL,10 ));
 	}
-	return  -(strtoll( ((st_data*)a)->conc , NULL,10) - strtoll( ((st_data*)b)->conc,NULL,10 ));
-	
+	return strcmp( in_a->name, in_b->name);
 }
 
 void read_data(char* in,int index)
 {
+	// split string with ,
 	char *split;
 	split=strtok(in,",");
 	strcpy(data[index].name,split);
@@ -67,17 +62,26 @@ void read_data(char* in,int index)
 
 int main()
 {
-	FILE* input=fopen("PM2.5.csv","r");
+	int t;
+
+	// get file name
+	char filename[300];
+	printf("input the file name:");
+	scanf("%s",filename);
+
+	// open file ptr
+	FILE* input=fopen(filename,"r");
 	FILE* output=fopen("outcomeSingle.csv","w");
 	FILE* output_bin=fopen("outcomePair.csv","w");
 
+	// puts the first line into output
 	char in[500];
 	char *split;
 	fgets(in,sizeof(in),input);
 	fputs(in,output);
 	fputs(in,output_bin);
 
-
+	// get all datas
 	int index=0;
 	while(fgets(in,sizeof(in),input) !=NULL)
 	{
@@ -85,31 +89,32 @@ int main()
 		index++;
 	}
 
+	// generate PartI file
 	printf("output outcomeSingle.cvs...\n");
 	qsort(data,index,sizeof(st_data),cmp);
 	
-	for(int t=0;t<index;t++)
+	for(t=0;t<index;t++)
 	{
-		//puts(data[t].name);
 		fprintf(output,"%s , %s , %s , %s",data[t].name,data[t].date,data[t].conc,data[t].unit);
 	}
 	printf("finish!\n");
 	
+	// generate PartII file
 	printf("output outcomePair.csv...\n");
 	qsort(data,index,sizeof(st_data),cmp_conc);
 
-	for(int t=0;t<index;t++)
+	for(t=0;t<index;t++)
 	{
-		//puts(data[t].name);
 		fprintf(output_bin,"%s , %s , %s , %s",data[t].name,data[t].date,data[t].conc,data[t].unit);
 	}
 	printf("finish!\n");
 
+	// get a threshold and outout answer
 	int threshold,error=0;
 	printf("Enter an integer n as threshold:");
 	scanf("%d",&threshold);
 
-	for(int t=0;t<index;t++)
+	for(t=0;t<index;t++)
 	{
 		if( strtoll(data[t].conc,NULL,10) >=threshold)
 		{
@@ -120,11 +125,7 @@ int main()
 	printf("%d warning data in total.\n",error);
 
 
-
-	
-
-	
-	
+	// close file ptr
 	fclose(output_bin);
 	fclose(input);
 	fclose(output);
