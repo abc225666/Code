@@ -1,0 +1,25 @@
+#pragma token off
+#pragma source off
+( {})({(()}{;,();)));;;;
++-*/ % = < <= != >= > ! && || ! ==
+=====
+while do if else true false for int print const read boolean
+bool void float double string continue break return
+aaa asd3241 abc_34235 _2352 anegnrzzzzzZZZ
+00124 13413 4194201 13000315 0134 1100
+0.0 12.34 0.10102 0.1000 000.100 1999.1 
+	0e000 0e+0 001212E+234 00e-131 0.124124e13400
+
+" \\ \" w\neffew "
+"\\\"\n\wg\\"
+
+"//"afa //
+
+aa /*wg eg
+wrgwgw
+gwg*/ int yy;
+
+#pragma token on //fwefeg
+#pragma token off
+#pragma token off /* gerggeg #pragma token on
+fewgw int b; */
