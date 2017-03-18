@@ -34,7 +34,7 @@ op [+\-*/%!=<>]|(<=)|(>=)|(&&)|(\|\|)|(!=)|(==)
 KW (while|do|if|else|true|false|for|int|print|const|read|boolean|bool|void|float|double|string|continue|break|return)
 letter [a-zA-Z_]
 number [0-9]
-pragma ((#pragma)(" ")+(token|source|statistic)(" ")+(on|off))
+pragma (^[ \t]*(#pragma)([ \t])+(token|source|statistic)([ \t])+(on|off))
 
 %x comment
 %x pragmacomment
@@ -85,7 +85,7 @@ pragma ((#pragma)(" ")+(token|source|statistic)(" ")+(on|off))
     BEGIN 0;
 }
 
-<morepragmacomment>" " {
+<morepragmacomment>[ \t] {
     LIST;
 }
 
@@ -110,19 +110,19 @@ pragma ((#pragma)(" ")+(token|source|statistic)(" ")+(on|off))
     LIST;
 }
 
-{pragma}(" ")*$ {
+{pragma}([ \t])*$ {
     pragmaset();
     //printf("normal pragma\n");
     LIST;
 }
 
-{pragma}(" ")*\/\/.*$ {
+{pragma}([ \t])*\/\/.*$ {
     pragmaset();
     //printf("// pragma\n");
     LIST;
 }
 
-{pragma}(" ")*"/*" {
+{pragma}([ \t])*"/*" {
     pragmaset();
     //printf("/* pragma\n");
     LIST;
