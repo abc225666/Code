@@ -1,8 +1,1 @@
-#pragma statistic off //fewf
-aaaa
-fwef
-aaaa
-int main()
-{
-	int b,b,b,b,c;
-}
+#pragma token on /* a */ a /*1*/

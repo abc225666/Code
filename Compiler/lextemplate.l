@@ -37,6 +37,9 @@ number [0-9]
 pragma ((#pragma)(" ")+(token|source|statistic)(" ")+(on|off))
 
 %x comment
+%x pragmacomment
+%x morepragmacomment
+
 
 %%
 
@@ -55,6 +58,49 @@ pragma ((#pragma)(" ")+(token|source|statistic)(" ")+(on|off))
     LIST;
     BEGIN 0;
 }
+
+<pragmacomment>\n {
+    LIST;
+    if (Opt_Source)
+        printf("%d:%s\n", linenum, buf);
+    ++linenum;
+    buf[0] = '\0';
+}
+
+<pragmacomment>. {
+    LIST;
+}
+
+<pragmacomment>"*/" {
+    LIST;
+    BEGIN morepragmacomment;
+}
+
+<morepragmacomment>\n {
+    LIST;
+    if (Opt_Source)
+        printf("%d:%s\n", linenum, buf);
+    ++linenum;
+    buf[0] = '\0';
+    BEGIN 0;
+}
+
+<morepragmacomment>" " {
+    LIST;
+}
+
+<morepragmacomment>"/*" {
+    LIST;
+    BEGIN pragmacomment;
+}
+
+<morepragmacomment>. {
+    fprintf(stderr, "Error at line %d: %s\n", linenum, yytext);
+    exit(1);
+}
+
+
+
 "/*" {
     LIST;
     BEGIN comment;
@@ -66,21 +112,21 @@ pragma ((#pragma)(" ")+(token|source|statistic)(" ")+(on|off))
 
 {pragma}(" ")*$ {
     pragmaset();
-    printf("normal pragma\n");
+    //printf("normal pragma\n");
     LIST;
 }
 
 {pragma}(" ")*\/\/.*$ {
     pragmaset();
-    printf("// pragma\n");
+    //printf("// pragma\n");
     LIST;
 }
 
 {pragma}(" ")*"/*" {
     pragmaset();
-    printf("/* pragma\n");
+    //printf("/* pragma\n");
     LIST;
-    BEGIN comment;
+    BEGIN pragmacomment;
 }
 
 {delim} {
@@ -136,7 +182,7 @@ pragma ((#pragma)(" ")+(token|source|statistic)(" ")+(on|off))
     buf[0] = '\0';
 }
 
-. { // Unrecognized character
+<INITIAL>. { // Unrecognized character
     fprintf(stderr, "Error at line %d: %s\n", linenum, yytext);
     exit(1);
 }
