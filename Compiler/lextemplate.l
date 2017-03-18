@@ -34,7 +34,7 @@ op [+\-*/%!=<>]|(<=)|(>=)|(&&)|(\|\|)|(!=)|(==)
 KW (while|do|if|else|true|false|for|int|print|const|read|boolean|bool|void|float|double|string|continue|break|return)
 letter [a-zA-Z_]
 number [0-9]
-pragma (^[ \t]*(#pragma)([ \t])+(token|source|statistic)([ \t])+(on|off))
+pragma ^([ \t]*(#pragma)([ \t])+(token|source|statistic)([ \t])+(on|off))
 
 %x comment
 %x pragmacomment
@@ -148,7 +148,8 @@ pragma (^[ \t]*(#pragma)([ \t])+(token|source|statistic)([ \t])+(on|off))
 }
 
 {letter}({letter}|{number})* {
-    idCount();
+    if(Opt_Statistic)
+        idCount();
     tokenString("id",yytext);
 }
 
